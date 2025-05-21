@@ -28,11 +28,13 @@ fi
 
 # Define the device
 DEVICE="vayu"
+WORK_DIR=$(pwd)
 
-# Set up the directories
-WORK_DIR="$HOME/lineage"
-mkdir -p "$WORK_DIR"
-cd "$WORK_DIR"
+if [ "$BUILDING_FROM_SCRATCH" = true ]; then
+    WORK_DIR=$HOME/lineage
+    mkdir -p "$WORK_DIR"
+    cd "$WORK_DIR"
+fi
 
 #  Set up ccache
 echo "Setting up ccache."
@@ -46,5 +48,5 @@ echo "Setting up the environment"
 source build/envsetup.sh
 
 # Choose the build target for LineageOS
-echo "Building the LineageOS ROM using brunch"
+echo "Building the LineageOS ROM using brunch for $DEVICE"
 brunch "$DEVICE"
