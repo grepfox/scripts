@@ -1,6 +1,8 @@
 #!/bin/bash
 
+rm -rf packages/overlays/Lineage/icons/IconPack* packages/overlays/Lineage/fonts/etc/
 clear
+#export SYNC_WITH_LINEAGE=true
 
 # Check for root
 if [ "$(id -u)" -eq "0" ]; then
@@ -40,13 +42,16 @@ fi
 echo "Setting up ccache."
 export USE_CCACHE=1
 export CCACHE_DIR="$WORK_DIR/.ccache"
-export CCACHE_MAXSIZE=50G 
-ccache -M 50G
+export CCACHE_MAXSIZE=20G
+ccache -M 20G
 
 # Set up the environment for the build
 echo "Setting up the environment"
 source build/envsetup.sh
+#breakfast vayu
+#mka target-files-package otatools
 
 # Choose the build target for LineageOS
 echo "Building the LineageOS ROM using brunch for $DEVICE"
 brunch "$DEVICE"
+bash sign.sh
