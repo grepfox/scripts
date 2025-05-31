@@ -2,8 +2,8 @@ clear
 echo "Setting up ccache."
 export USE_CCACHE=1
 export CCACHE_DIR="$WORK_DIR/.ccache"
-export CCACHE_MAXSIZE=50G
-ccache -M 50G
+export CCACHE_MAXSIZE=20G
+ccache -M 20G
 source build/envsetup.sh
 breakfast vayu
 mka target-files-package otatools
