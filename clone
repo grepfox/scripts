@@ -1,1 +1,10 @@
-git clone https://github.com/lineage-vayu/device_xiaomi_sm8150-common device/xiaomi/sm8150-common && git clone https://github.com/lineage-vayu/device_xiaomi_vayu device/xiaomi/vayu && git clone https://github.com/lineage-vayu/kernel_xiaomi_sm8150 -b lineage-22.2 kernel/xiaomi/sm8150 && git clone https://github.com/lineage-vayu/vendor_xiaomi vendor/xiaomi && git clone https://github.com/LineageOS/android_hardware_xiaomi -b lineage-22.2 hardware/xiaomi
+#!/bin/bash
+
+if [[ "$1" == "vayu" ]]; then
+    echo "Cloning for Vayu..."
+    git clone https://github.com/lineage-vayu/device_xiaomi_sm8150-common device/xiaomi/sm8150-common
+    git clone https://github.com/lineage-vayu/device_xiaomi_vayu device/xiaomi/vayu
+    git clone https://github.com/lineage-vayu/kernel_xiaomi_sm8150 -b lineage-22.2 kernel/xiaomi/sm8150
+    git clone https://github.com/lineage-vayu/vendor_xiaomi vendor/xiaomi -b lineage-22.2
+    git clone https://github.com/LineageOS/android_hardware_xiaomi -b lineage-22.2 hardware/xiaomi
+fi
