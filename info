@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Function to generate JSON from file details
+generate_json() {
+    # Input: The file path provided as the argument
+    local filepath=$1
+
+    # Check if the file exists
+    if [[ ! -f "$filepath" ]]; then
+        echo "File not found: $filepath"
+        exit 1
+    fi
+
+    # Extract filename from the provided file path
+    filename=$(basename "$filepath")
+    
+    # Get file size in bytes
+    size=$(stat --format=%s "$filepath")
+
+    # Create a unique ID for the file (simulating an md5 hash or similar)
+    id=$(sha256sum "$filepath" | awk '{print $1}')
+
+    # Get the current datetime (in UNIX timestamp format)
+    datetime=$(date +%s)
+
+    # Example: Set ROM type and version as constants or from any other source
+    romtype="nightly"
+    version="22.2"
+
+    # URL to be used (you can customize this part as needed)
+    url="https://github.com/grepfox/ota_release/releases/download/02062025/$filename"
+
+    # Generate JSON output
+    cat <<EOF
+{
+  "response": [
+    {
+      "datetime": $datetime,
+      "filename": "$filename",
+      "id": "$id",
+      "romtype": "$romtype",
+      "size": $size,
+      "url": "$url",
+      "version": "$version"
+    }
+  ]
+}
+EOF
+}
+
+# Check if a file path is provided as argument
+if [[ -z "$1" ]]; then
+    echo "Usage: $0 <file-path>"
+    exit 1
+fi
+
+# Call the function to generate the JSON
+generate_json "$1"
