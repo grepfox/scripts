@@ -1,5 +1,10 @@
-clear
+#clear
 echo "Setting up ccache."
+export KBUILD_BUILD_USER=grepfox
+export KBUILD_BUILD_HOST=home
+export BUILD_USERNAME=grepfox
+export BUILD_HOSTNAME=home
+export TMPDIR=~/tmp
 export USE_CCACHE=1
 export CCACHE_DIR="$WORK_DIR/.ccache"
 export CCACHE_MAXSIZE=20G
@@ -150,4 +155,4 @@ date_str=$(date +"%Y%m%d")
 ota_from_target_files -k ~/.android-certs/releasekey \
     --block --backup=true \
     signed-target_files.zip \
-    lineage-22.2-signed-${date_str}-UNOFFICIAL-vayu.zip
+    LineageOSMOD-22.2-signed-${date_str}-UNOFFICIAL-vayu.zip

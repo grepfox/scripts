@@ -1,8 +1,10 @@
 #!/bin/bash
 
 rm -rf packages/overlays/Lineage/icons/IconPack* packages/overlays/Lineage/fonts/etc/
+
 clear
-#export SYNC_WITH_LINEAGE=true
+
+#SYNC_WITH_LINEAGE=true
 
 # Check for root
 if [ "$(id -u)" -eq "0" ]; then
@@ -14,7 +16,7 @@ if [ "$SYNC_WITH_LINEAGE" == "true" ]; then
     echo "Syncing with LineageOS source"
 
     # Repo initialization
-    repo init -u https://github.com/grepfox/android.git -b lineage-22.2 --git-lfs --depth=1
+    repo init -u https://github.com/lineage-vayu/android.git -b lineage-22.2 --git-lfs --depth=1
     if [ $? -ne 0 ]; then
         echo "Repo init failed, but continuing with the build process"
     fi
@@ -38,6 +40,12 @@ if [ "$BUILDING_FROM_SCRATCH" = true ]; then
     cd "$WORK_DIR"
 fi
 
+export KBUILD_BUILD_USER=grepfox 
+export KBUILD_BUILD_HOST=home
+export BUILD_USERNAME=grepfox
+export BUILD_HOSTNAME=home
+
+
 #  Set up ccache
 echo "Setting up ccache."
 export USE_CCACHE=1
@@ -49,6 +57,7 @@ ccache -M 20G
 echo "Setting up the environment"
 source build/envsetup.sh
 #breakfast vayu
+#make bootimage dtboimage
 #mka target-files-package otatools
 
 # Choose the build target for LineageOS
