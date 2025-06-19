@@ -4,10 +4,18 @@ import hashlib
 import json
 import time
 
-def generate_file_info(filepath, output_filename="vayu.json"):
+def generate_file_info(filepath):
     if not os.path.isfile(filepath):
         print(f"File not found: {filepath}")
         sys.exit(1)
+
+    # Ask the user for the desired output name (e.g., vayu)
+    base_name = input("Enter base name for output JSON (e.g., vayu): ").strip()
+    if not base_name:
+        print("Error: No name provided.")
+        sys.exit(1)
+
+    output_filename = f"{base_name}.json"
 
     filename = os.path.basename(filepath)
     size = os.path.getsize(filepath)
@@ -20,7 +28,7 @@ def generate_file_info(filepath, output_filename="vayu.json"):
     file_id = sha256_hash.hexdigest()
 
     datetime_unix = int(time.time())
-    
+
     romtype = "nightly"
     version = "22.2"
     url = f"https://github.com/grepfox/ota_release/releases/download/02062025/{filename}"
@@ -39,11 +47,10 @@ def generate_file_info(filepath, output_filename="vayu.json"):
         ]
     }
 
-    # Write to vayu.json
     with open(output_filename, "w") as json_file:
         json.dump(response, json_file, indent=2)
-    
-    print(f"Saved OTA JSON saved to {output_filename}")
+
+    print(f"OTA info has been saved to {output_filename}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
