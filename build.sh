@@ -4,7 +4,14 @@ rm -rf packages/overlays/Lineage/icons/IconPack* packages/overlays/Lineage/fonts
 
 clear
 
-#SYNC_WITH_LINEAGE=true
+read -p "Do you want to sync with lineage? (y/n): " answer
+if [ "$answer" = "y" ]; then
+    export SYNC_WITH_LINEAGE=true
+    echo "SYNC_WITH_LINEAGE is set to true"
+else
+    echo "SYNC_WITH_LINEAGE not set"
+fi
+
 
 # Check for root
 if [ "$(id -u)" -eq "0" ]; then
@@ -56,11 +63,16 @@ ccache -M 20G
 # Set up the environment for the build
 echo "Setting up the environment"
 source build/envsetup.sh
-#breakfast vayu
-#make bootimage dtboimage
-#mka target-files-package otatools
 
 # Choose the build target for LineageOS
-echo "Building the LineageOS ROM using brunch for $DEVICE"
-brunch "$DEVICE"
-bash sign.sh
+read -p "Do you want to build the ROM? (y/n) (yes for rom / n for kernel): " build_reponse
+if [ "$build_reponse" = "y" ]; then
+    echo "Building the LineageOS ROM using brunch for $DEVICE"
+    brunch "$DEVICE"
+    bash sign.sh
+else
+    echo "Building Kernel"
+    breakfast "$DEVICE"
+    m bootimage dtboimage
+fi
+
